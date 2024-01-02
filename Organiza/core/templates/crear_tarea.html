@@ -4,6 +4,7 @@
 
     <h2>Crear Tarea</h2>
     <form action="" method="POST">
+        {% csrf_token %}
         <div class="form-group">
             <input type="text" id="txtTitulo" name="txtTitulo" class="form-control" placeholder="Titulo" minlength="3" maxlength="30" required>
         </div>
