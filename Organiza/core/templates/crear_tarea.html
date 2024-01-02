@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Crear Tarea</h2>
+    <form action="" method="POST">
+        <div class="form-group">
+            <input type="text" id="txtTitulo" name="txtTitulo" class="form-control" placeholder="Titulo" minlength="3" maxlength="30" required>
+        </div>
+        <div class="form-group pt-1">
+            <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" placeholder="Descripcion" minlength="3" maxlength="150" required>
+        </div>
+        <div class="form-group pt-1">
+            <input type="date" id="dtVencimiento" name="dtVencimiento" class="form-control" placeholder="Fecha de Vencimiento" min="2017-04-01" max="2999-12-31" required>
+        </div>
+        <div class="form-group pt-1">
+            <select class="form-select" name="Categoria" id="Categoria">
+                <option selected>Selecciona una opción</option>
+                {% for c in categorias %}
+                <option value="{{c.id}}">{{c.nameCat}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group pt-1">
+            <button type="submit" class="btn btn-dark">Crear</button>
+            <button type="reset" class="btn btn-dark">Limpiar</button>
+        </div>
+    </form>
+
+    <script>
+        dtVencimiento.min = new Date().toLocaleDateString('fr-ca')
+    </script>
+{% endblock content %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block tittle %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">  
+<title>Tareas</title>
+{% endblock tittle %}
+
+{% block content %}
+
+<div>
+    <h2>Crear Tarea</h2>
+    <form action="" method="POST">
+        <div class="form-group">
+            <input type="text" id="txtTitulo" name="txtTitulo" class="form-control" placeholder="Titulo" minlength="3" maxlength="30" required>
+        </div>
+        <div class="form-group pt-1">
+            <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" placeholder="Descripcion" minlength="3" maxlength="150" required>
+        </div>
+        <div class="form-group pt-1">
+            <input type="date" id="dtVencimiento" name="dtVencimiento" class="form-control" placeholder="Fecha de Vencimiento" min="2017-04-01" max="2999-12-31" required>
+        </div>
+        <div class="form-group pt-1">
+            <select class="form-select" name="Categoria" id="Categoria">
+                <option selected>Selecciona una opción</option>
+                {% for c in categorias %}
+                <option value="{{c.id}}">{{c.nameCat}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group pt-1">
+            <button type="submit" class="btn btn-dark">Crear</button>
+            <button type="reset" class="btn btn-dark">Limpiar</button>
+        </div>
+    </form>
+
+    <script>
+        dtVencimiento.min = new Date().toLocaleDateString('fr-ca')
+    </script>
+</div>
+
+<div class="d-grid gap-2 col-6 mx-auto">
+    <a href="{% url 'formTareas' %}" class="btn btn-dark">Crear tarea nueva</a>
+</div>
+
+<h3>Lista de Tareas</h3>
+
+<table id="tareaTabla" class="table table-light table-striped" style="width:100%">
+    <thead>
+      <tr>
+        <th scope="col">Titulo</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Fecha Vencimiento</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Realizada</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for t in tareas %}
+
+        <tr>
+            <td>{{t.titulo}}</td>
+            <td><p class="text-truncate" style="width: 15rem">{{t.descripcion}}</p></td>
+            <td>{{t.dt_vencimiento}}</td>
+            <td>{{t.categoria}}</td>
+            <td>
+                {% if t.realizada == True %}
+                <img src="{% static 'core/svg/check.svg' %}" class="bg-success rounded" alt="Listo">
+                {% else %}
+                <img src="{% static 'core/svg/x.svg' %}" class="bg-danger rounded" alt="No Listo">
+                {% endif %}
+            </td>
+            <td>
+                <a href="#"><img src="{% static 'core/svg/edit.svg' %}" alt="Listo"></a>
+                <a href="#"><img src="{% static 'core/svg/x-circle.svg' %}" alt="Listo"></a>
+                <a href="#"><img src="{% static 'core/svg/copy.svg' %}" alt="Listo"></a>
+            </td>
+        </tr>
+
+    {% endfor %}
+  </table>
+
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    let table = new DataTable('#tareaTabla');
+</script>
+{% endblock content %}
